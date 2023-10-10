@@ -8,4 +8,4 @@ const validarCampos = (req, res, next) => {
     next()
 }
 
-export default validarCampos
+export { validarCampos }

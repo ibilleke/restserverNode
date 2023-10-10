@@ -32,8 +32,11 @@ const usuarioSchema = mongoose.Schema({
     },
 })
 
+
+
 usuarioSchema.methods.toJSON = function() {
-    const { __v, contraseña, ...usuario } = this.toObject()
+    const { __v, contraseña, _id, ...usuario } = this.toObject()
+    usuario.uid = _id
     return usuario
 }
 
