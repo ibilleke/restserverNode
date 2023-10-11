@@ -1,7 +1,8 @@
-import { response } from "express"
+import { json, response } from "express"
 import bcrypt from "bcrypt"
 import Usuario from "../models/usuario.js"
 import generarJWT from "../helpers/generar-jwt.js"
+import googleVerify from "../helpers/google-verify.js"
 
 const login = async(req, res) => {
     const { correo, contraseña } = req.body
@@ -47,4 +48,50 @@ const login = async(req, res) => {
     }
 }
 
-export { login }
+const googleSignIn = async(req, res) => {
+    const { id_token } = req.body
+
+    try {
+        const { nombre, imagen, correo } = await googleVerify( id_token )
+
+        let usuario = await Usuario.findOne({correo})
+
+        // Se verifica si el usuario existe o es el primer ingreso
+        if(!usuario) {
+            // Crea el usuario si es el primer ingreso
+            const data = {
+                nombre,
+                correo,
+                contraseña: '',
+                imagen,
+                google: true
+
+            }
+
+            usuario = new Usuario(data)
+            await usuario.save()
+        }
+
+        // Si el usuario de db
+        if(!usuario.estado) {
+            return res.status(401).json({
+                msg: 'Usuario desactivado'
+            })
+        }
+
+        // Generar el JWT
+        const token = await generarJWT(usuario.id)
+
+        res.json({
+           usuario,
+           token
+        })        
+    } catch (error) {
+        json.status(401).json({
+            ok: false,
+            msg: 'El token no se puede verificar'
+        })
+    }
+}
+
+export { login, googleSignIn }
