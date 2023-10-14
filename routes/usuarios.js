@@ -1,6 +1,6 @@
 import { Router } from "express"
 import {check} from "express-validator"
-import { validarCampos, validarJWT, esAdinRole, tieneRole } from "../middlewares/index.js"
+import { validarCampos, validarJWT, tieneRole } from "../middlewares/index.js"
 import { roleValido, correoExiste, existeUsuarioPorId } from "../helpers/db-validators.js"
 import { usuariosGet, usuariosPost, usuariosPut, usuariosPatch, usuariosDelete } from "../controllers/usuarios.js"
 

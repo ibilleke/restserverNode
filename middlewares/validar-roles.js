@@ -1,6 +1,6 @@
 import { response } from "express"
 
-const esAdinRole = (req, res, next) => {
+const esAdminRole = (req, res, next) => {
     if(!req.usuario) {
         return res.status(500).json({
             msg: 'Se requiere verificar el role sin válidar el token primero'
@@ -36,4 +36,4 @@ const tieneRole = ( ...roles ) => {
     }
 }
 
-export { esAdinRole, tieneRole }
+export { esAdminRole, tieneRole }

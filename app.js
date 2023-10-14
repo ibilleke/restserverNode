@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import Server from './models/server.js'
+import { Server } from './models/index.js'
 
 const server = new Server()
 

@@ -8,5 +8,4 @@ const RoleSchema = Schema({
 })
 
 const Role = model('Role', RoleSchema)
-
-export default Role
+export { Role }
