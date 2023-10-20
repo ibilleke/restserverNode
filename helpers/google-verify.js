@@ -19,4 +19,4 @@ async function googleVerify( token ) {
   }
 }
 
-export default googleVerify
+export { googleVerify }

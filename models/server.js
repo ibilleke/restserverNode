@@ -1,10 +1,12 @@
 import express from "express"
 import cors from "cors"
+import fileUpload from "express-fileupload"
 import dbConnetion from "../db/config.js"
 import routerAuth from "../routes/auth.js"
 import routerBusqueda from "../routes/buscar.js"
 import routerCategoria from "../routes/categorias.js"
 import routerProductos from "../routes/productos.js"
+import routeSubirArchivos from "../routes/subirArchivos.js"
 import router from "../routes/usuarios.js"
 
 class Server {
@@ -18,6 +20,7 @@ class Server {
             buscar: '/api/buscar',
             categorias: '/api/categorias',
             productos: '/api/productos',
+            subir: '/api/subir',
             usuarios: '/api/usuarios'
         }
 
@@ -42,6 +45,12 @@ class Server {
         this.app.use(express.json())
         // Directorio Público
         this.app.use(express.static('public'))
+        // SurbirArchivos - carga de archivos
+        this.app.use(fileUpload({
+            useTempFiles: true,
+            tempFileDir: '/tmp/',
+            createParentPath: true
+        }));
     }
 
     routes () {
@@ -49,6 +58,7 @@ class Server {
         this.app.use(this.paths.buscar, routerBusqueda)
         this.app.use(this.paths.categorias, routerCategoria)
         this.app.use(this.paths.productos, routerProductos)
+        this.app.use(this.paths.subir, routeSubirArchivos)
         this.app.use(this.paths.usuarios, router)
     }
 

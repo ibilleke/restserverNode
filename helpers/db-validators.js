@@ -1,5 +1,5 @@
+import mongoose from "mongoose"
 import { Role, Usuario, Categoria, Producto } from "../models/index.js"
-import mongoose from "mongoose";
 
 // ROLES
 
@@ -52,4 +52,16 @@ const existeProducto = async(id) => {
     }
 }
 
-export { roleValido, correoExiste, existeUsuarioPorId, existeCategoria, existeProducto }
+// VÁLIDAR COLECCIONES PERMITIDAS
+
+const coleccionesPermitidas = ( coleccion, colecciones) => {
+    const incluida = colecciones.includes( coleccion )
+
+    if(!incluida) {
+        throw new Error(`La colección ${ coleccion } no es permitida, ${ colecciones }`)
+    }
+
+    return true
+}
+
+export { roleValido, correoExiste, existeUsuarioPorId, existeCategoria, existeProducto, coleccionesPermitidas }

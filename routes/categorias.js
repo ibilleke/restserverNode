@@ -2,7 +2,7 @@ import { Router } from "express"
 import { check } from "express-validator"
 import { validarCampos, validarJWT, esAdminRole } from "../middlewares/index.js"
 import { obtenerCategorias, obtenerCategoria, crearCategoria, actualizarCategoria, borrarCategoria } from "../controllers/categorias.js"
-import { existeCategoria } from "../helpers/db-validators.js"
+import { existeCategoria } from "../helpers/index.js"
 
 const routerCategoria = Router()
 /** 

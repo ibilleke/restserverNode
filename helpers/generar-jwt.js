@@ -19,4 +19,4 @@ const generarJWT = (uid) => {
     })
 }
 
-export default generarJWT
+export { generarJWT }
